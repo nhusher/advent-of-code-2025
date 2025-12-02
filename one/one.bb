@@ -6,15 +6,15 @@
 
 
 (defn rotate [value amt]
+  ; handle values > 100 or < -100 using remainder fn
   (let [new-val (rem (+ value amt) 100)]
-    (cond
-      (neg? new-val) (+ new-val 100)
-      (< 99 new-val) (- new-val 100)
-      :else          new-val)))
+  ; if negative, correct to positive dial pos'n
+    (if (neg? new-val) (+ new-val 100) new-val)))
 
 
 (defn rotate-noting-zeroes [[value zeroes] action]
   (let [new-val (rotate value action)
+        ; any time we land on zero, record that
         new-zs  (if (zero? new-val) (inc zeroes) zeroes)]
     [new-val new-zs]))
 

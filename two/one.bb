@@ -7,6 +7,8 @@
 
 
 (defn invalid-id? [id]
+  ; ABCABC  = invalid
+  ; ABCDABC = valid
   (let [id-str (str id)]
     (if (odd? (count id-str))
       false
@@ -27,7 +29,7 @@
 
 (def result
   (->> *lines*
-       first
+       first  ;; input has only one line!
        parse-line
        (filter invalid-id?)
        (reduce + 0)))

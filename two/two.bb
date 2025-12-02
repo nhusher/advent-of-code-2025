@@ -7,6 +7,8 @@
 
 
 (defn invalid-id? [id]
+  ; use a cheap trick here: doubling the string and checking for repeats
+  ; after index zero is a clever way to look for repeats
   (let [id-str (str id)
         idx (s/index-of (str id id) id-str 1)]
     (< idx (count id-str))))
@@ -26,7 +28,7 @@
 
 (def result
   (->> *lines*
-       first
+       first  ;; input has only one line!
        parse-line
        (filter invalid-id?)
        (reduce + 0)))
