@@ -39,6 +39,8 @@
 (defn removable? [cell x y grid]
   (when cell (->> (neighbors cell x y grid) (filter some?) count (> 4))))
 
+; use a transient here, otherwise repeatedly updating the same persistent vec
+; takes _forever_ when finished, convert back to a persistent data structure
 (defn alter-grid [f grid]
   (loop [idx 0
          cells (transient (:cells grid))]
@@ -66,15 +68,16 @@
   (let [ctr (fn [grid] (->> grid :cells (filter some?) count))]
     (- (ctr before) (ctr after))))
 
+; print the grid in the same way as on the website:
 (defn pr-grid [grid]
-  (let [cpt (fn [cell & _] (if (keyword? cell) "@" " "))
+  (let [cpt (fn [cell & _] (if (keyword? cell) "@" "."))
         {:keys [cells width]} (alter-grid cpt grid)
         lns (partition width cells)]
     (doseq [ln lns]
-      (prn (s/join "" ln)))))
+      (println (s/join "" ln)))))
 
 (let [grid (parse-grid *lines*)
       removed (remove-all-possible-rolls grid)]
   (pr-grid removed)
-  (prn "removed" (count-removed-rolls grid removed) "rolls"))
+  (println "removed" (count-removed-rolls grid removed) "rolls"))
 
