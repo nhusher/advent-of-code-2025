@@ -17,8 +17,8 @@
       (and (<= r2s r1s) (>= r2e r1e))  ;; rng2 is superset
       (and (>= r1e r2s) (<= r1s r2e))  ;; overlap right
       (and (>= r2e r1s) (<= r2s r1e))  ;; overlap left
-      (= (inc r1e) r2s)  ;; neighbor right
-      (= (inc r2e) r1s) ;; neighbor left
+      (= (inc r1e) r2s)                ;; neighbor right
+      (= (inc r2e) r1s)                ;; neighbor left
     )))
 
 (defn any-range-joinable? [ranges]
