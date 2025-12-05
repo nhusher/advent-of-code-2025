@@ -2,7 +2,7 @@
 
 (require '[clojure.string :as s])
 
-;; cat input.txt | ./one.bb
+;; cat input.txt | ./two.bb
 (def *lines* (line-seq (io/reader *in*)))
 
 (defn parse-id [id] (-> id parse-double biginteger))
